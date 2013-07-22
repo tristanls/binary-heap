@@ -1,6 +1,6 @@
 /*
 
-test.js - heap test
+test.js - heap.minHeapify() test
 
 The MIT License (MIT)
 
@@ -35,34 +35,18 @@ var Heap = require('../index.js');
 
 var test = module.exports = {};
 
-test['new heap has size 0'] = function (test) {
+test['minHeapify(2) of [1,8,3,4,7,9,10,14,2,16] should result ' +
+     'in [1,2,3,4,7,9,10,14,8,16]'] = function (test) {
     test.expect(1);
-    test.equal(new Heap().size(), 0);
+    var heap = new Heap({heap: [1,8,3,2,7,9,10,14,4,16], kind: 'min-heap'});
+    test.deepEqual(heap.minHeapify(2).dump(), [1,2,3,4,7,9,10,14,8,16]);
     test.done();
 };
 
-test['new heap can be initialized with an array of values'] = function (test) {
+test['minHeapify() on min heapified heap [1,2,3,4,7,9,10,14,8,16] ' +
+     'makes no changes'] = function (test) {
     test.expect(1);
-    test.deepEqual(new Heap({heap: [1,2,3]}).dump(), [1,2,3]);
-    test.done();
-};
-
-test['new heap initialized with an array has the size of the array'] = function (test) {
-    test.expect(1);
-    test.equal(new Heap({heap: [3,2,1]}).size(), 3);
-    test.done();
-};
-
-test['new heap can be built using build() which will build a heap from an array'] = function (test) {
-    test.expect(1);
-    test.deepEqual(Heap.build({heap: [4,1,3,2,16,9,10,14,8,7]}).dump(), [16,14,10,8,7,9,3,2,4,1]);
-    test.done();
-};
-
-test['new min heap can be built using build() which will build a heap from an array'] = function (test) {
-    test.expect(1);
-    test.deepEqual(
-        Heap.build({heap: [4,1,3,2,16,9,10,14,8,7], kind: 'min-heap'}).dump(), 
-        [1,2,3,4,7,9,10,14,8,16]);
+    var heap = new Heap({heap: [1,2,3,4,7,9,10,14,8,16], kind: 'min-heap'});
+    test.deepEqual(heap.minHeapify(2).minHeapify(1).dump(), [1,2,3,4,7,9,10,14,8,16]);
     test.done();
 };

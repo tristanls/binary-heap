@@ -64,6 +64,17 @@ Heap.buildMaxHeap = function buildMaxHeap (array, heapSize) {
     return array;
 };
 
+// array: *required* the 1-indexed array storage for the heap 
+//        (array[0] will not be modified)
+// heapSize: *required* heap size
+Heap.buildMinHeap = function buildMinHeap (array, heapSize) {
+    var middle = Math.floor(heapSize / 2);
+    for (var i = middle; i > 0; i--) {
+        Heap.minHeapify(array, i, heapSize);
+    }
+    return array;
+};
+
 // index: *required* the index of a node to find the left child of
 // *WARNING*: this method is not safe for index < 1;
 Heap.left = function left (index) {
@@ -94,6 +105,30 @@ Heap.maxHeapify = function maxHeapify (array, index, heapSize) {
     }
 };
 
+// array: *required* the 1-indexed array storage for the heap 
+//        (array[0] will not be modified)
+// index: *required* the array index to start minHeapify procedure on
+// heapSize: *required* heap size
+Heap.minHeapify = function minHeapify (array, index, heapSize) {
+    var left = Heap.left(index); // TODO: inline
+    var right = Heap.right(index); // TODO: inline
+    var smallest;
+    if (left <= heapSize && array[left] < array[index]) {
+        smallest = left;
+    } else {
+        smallest = index;
+    }
+    if (right <= heapSize && array[right] < array[smallest]) {
+        smallest = right;
+    }
+    if (smallest != index) {
+        var temp = array[index];
+        array[index] = array[smallest];
+        array[smallest] = temp;
+        Heap.minHeapify(array, smallest, heapSize);
+    }
+}
+
 // index: *required* the index of a node to find the parent of
 // *WARNING*: this method is not safe for index < 1;
 Heap.parent = function parent (index) {
@@ -110,6 +145,8 @@ Heap.prototype.build = function build () {
     var self = this;
     if (self.kind == 'max-heap') {
         Heap.buildMaxHeap(self.array, self.array[0]);
+    } else {
+        Heap.buildMinHeap(self.array, self.array[0]);
     }
     return self;
 };
@@ -120,9 +157,16 @@ Heap.prototype.dump = function dump () {
 };
 
 // index: *required* the array index to start maxHeapify procedure on
-Heap.prototype.maxHeapify = function maxHeapify (index) {
+Heap.prototype.maxHeapify = function (index) {
     var self = this;
     Heap.maxHeapify(self.array, index, self.array[0]);
+    return self;
+};
+
+// index: *required* the array index to start minHeapify procedure on
+Heap.prototype.minHeapify = function (index) {
+    var self = this;
+    Heap.minHeapify(self.array, index, self.array[0]);
     return self;
 };
 
