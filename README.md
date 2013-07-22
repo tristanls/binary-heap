@@ -44,6 +44,13 @@ Creates a new Heap and if given `options.heap` will ensure that the returned hea
 
 Changes the `array` in place so that it satisfies max heap property. Returns the resulting `array` for convenience.
 
+#### Heap.buildMinHeap(array, heapSize)
+
+  * `array` _Array_ the 1-indexed array storage for the heap (array[0] will not be modified)
+  * `heapSize` _Integer_ heap size
+
+Changes the `array` in place so that it satisfies min heap property. Returns the resulting `array` for convenience.
+
 #### Heap.left(index)
 
   * `index` _Integer_ index of a node to find the left child of
@@ -59,6 +66,14 @@ Returns the index of the left child for the node at index `index`.
   * `heapSize` _Integer_ heap size
 
 Ensures that the max-heap property is satisfied for the sub-tree rooted at `index` of the array representing a binary tree.
+
+#### Heap.minHeapify(array, index, heapSize)
+
+  * `array` _Array_ the 1-indexed array storage for the heap (array[0] will not be modified)
+  * `index` _Integer_ the array index to start minHeapify procedure on
+  * `heapSize` _Integer_ heap size
+
+Ensures that the min-heap property is satisfied for the sub-tree rooted at `index` of the array representing a binary tree.
 
 #### Heap.parent(index)
 
@@ -97,6 +112,12 @@ Dumps the present contents of storage used for the heap. The dump may include el
   * `index` _Integer_ index of the node where to begin the procedure
 
 Ensures that the max-heap property is satisfied for the sub-tree rooted at `index`.
+
+#### heap.minHeapify(index)
+
+  * `index` _Integer_ index of the node where to begin the procedure
+
+Ensures that the min-heap property is satisfied for the sub-tree rooted at `index`.
 
 #### heap.size()
 
