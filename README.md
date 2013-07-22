@@ -45,6 +45,13 @@ Returns the index of the left child for the node at index `index`.
 
 *WARNING*: this method is not safe, invalid input is not checked
 
+#### Heap.maxHeapify(array, index)
+
+  * `array` _Array_ the 1-indexed array storage for the heap (array[0] will not be modified)
+  * `index` _Integer_ the array index to start maxHeapify procedure on
+
+Ensures that the max-heap property is satisfied for the sub-tree rooted at `index` of the array representing a binary tree.
+
 #### Heap.parent(index)
 
   * `index` _Integer_ index of a node to find the parent of

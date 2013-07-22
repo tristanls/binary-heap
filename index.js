@@ -66,6 +66,30 @@ Heap.left = function left (index) {
     return index << 1;
 };
 
+// array: *required* the 1-indexed array storage for the heap 
+//        (array[0] will not be modified)
+// index: *required* the array index to start maxHeapify procedure on
+Heap.maxHeapify = function maxHeapify (array, index) {
+    var left = Heap.left(index); // TODO: inline
+    var right = Heap.right(index); // TODO: inline
+    var heapSize = array.length - 1; // array[0] not counted
+    var largest;
+    if (left <= heapSize && array[left] > array[index]) {
+        largest = left;
+    } else {
+        largest = index;
+    }
+    if (right <= heapSize && array[right] > array[largest]) {
+        largest = right;
+    }
+    if (largest != index) {
+        var temp = array[index];
+        array[index] = array[largest];
+        array[largest] = temp;
+        Heap.maxHeapify(array, largest);
+    }
+};
+
 // index: *required* the index of a node to find the parent of
 // *WARNING*: this method is not safe for index < 1;
 Heap.parent = function parent (index) {
@@ -86,24 +110,7 @@ Heap.prototype.dump = function dump () {
 // index: *required* the array index to start maxHeapify procedure on
 Heap.prototype.maxHeapify = function maxHeapify (index) {
     var self = this;
-    var left = Heap.left(index); // TODO: inline
-    var right = Heap.right(index); // TODO: inline
-    var heapSize = self.size(); // TODO: inline
-    var largest;
-    if (left <= heapSize && self.array[left] > self.array[index]) {
-        largest = left;
-    } else {
-        largest = index;
-    }
-    if (right <= heapSize && self.array[right] > self.array[largest]) {
-        largest = right;
-    }
-    if (largest != index) {
-        var temp = self.array[index];
-        self.array[index] = self.array[largest];
-        self.array[largest] = temp;
-        self.maxHeapify(largest);
-    }
+    Heap.maxHeapify(self.array, index);
     return self;
 };
 
