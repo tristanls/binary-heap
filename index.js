@@ -50,14 +50,18 @@ var Heap = module.exports = function Heap (options) {
 
 // options: see documentation of Heap()
 Heap.build = function build (options) {
-    var heap = new Heap(options);
-    if (heap.kind == 'max-heap') {
-        var middle = Math.floor(heap.size() / 2);
-        for (var i = middle; i > 0; i--) {
-            heap.maxHeapify(i);
-        }
+    return new Heap(options).build();
+};
+
+// array: *required* the 1-indexed array storage for the heap 
+//        (array[0] will not be modified)
+// heapSize: *required* heap size
+Heap.buildMaxHeap = function buildMaxHeap (array, heapSize) {
+    var middle = Math.floor(heapSize / 2);
+    for (var i = middle; i > 0; i--) {
+        Heap.maxHeapify(array, i);
     }
-    return heap;
+    return array;
 };
 
 // index: *required* the index of a node to find the left child of
@@ -100,6 +104,14 @@ Heap.parent = function parent (index) {
 // *WARNING*: this method is not safe for index < 1;
 Heap.right = function right (index) {
     return (index << 1) + 1;
+};
+
+Heap.prototype.build = function build () {
+    var self = this;
+    if (self.kind == 'max-heap') {
+        Heap.buildMaxHeap(self.array, self.array[0]);
+    }
+    return self;
 };
 
 Heap.prototype.dump = function dump () {

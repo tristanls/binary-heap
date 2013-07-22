@@ -37,6 +37,13 @@ A JavaScript implementation of a binary heap.
 
 Creates a new Heap and if given `options.heap` will ensure that the returned heap satisfies the heap property dictated by `options.kind`.
 
+#### Heap.buildMaxHeap(array, heapSize)
+
+  * `array` _Array_ the 1-indexed array storage for the heap (array[0] will not be modified)
+  * `heapSize` _Integer_ heap size
+
+Changes the `array` in place so that it satisfies max heap property. Returns the resulting `array` for convenience.
+
 #### Heap.left(index)
 
   * `index` _Integer_ index of a node to find the left child of
@@ -75,6 +82,10 @@ Returns the index of the right child of the node at index `index`.
     * `kind`: _String_ One of `min-heap`, `max-heap` (default: `max-heap`)
 
 Creates a new Heap.
+
+#### heap.build()
+
+Builds a max or min heap, depending on the heap kind. Returns the heap for convenience.
 
 #### heap.dump()
 
