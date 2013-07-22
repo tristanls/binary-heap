@@ -59,7 +59,7 @@ Heap.build = function build (options) {
 Heap.buildMaxHeap = function buildMaxHeap (array, heapSize) {
     var middle = Math.floor(heapSize / 2);
     for (var i = middle; i > 0; i--) {
-        Heap.maxHeapify(array, i);
+        Heap.maxHeapify(array, i, heapSize);
     }
     return array;
 };
@@ -73,10 +73,10 @@ Heap.left = function left (index) {
 // array: *required* the 1-indexed array storage for the heap 
 //        (array[0] will not be modified)
 // index: *required* the array index to start maxHeapify procedure on
-Heap.maxHeapify = function maxHeapify (array, index) {
+// heapSize: *required* heap size
+Heap.maxHeapify = function maxHeapify (array, index, heapSize) {
     var left = Heap.left(index); // TODO: inline
     var right = Heap.right(index); // TODO: inline
-    var heapSize = array.length - 1; // array[0] not counted
     var largest;
     if (left <= heapSize && array[left] > array[index]) {
         largest = left;
@@ -90,7 +90,7 @@ Heap.maxHeapify = function maxHeapify (array, index) {
         var temp = array[index];
         array[index] = array[largest];
         array[largest] = temp;
-        Heap.maxHeapify(array, largest);
+        Heap.maxHeapify(array, largest, heapSize);
     }
 };
 
@@ -122,7 +122,7 @@ Heap.prototype.dump = function dump () {
 // index: *required* the array index to start maxHeapify procedure on
 Heap.prototype.maxHeapify = function maxHeapify (index) {
     var self = this;
-    Heap.maxHeapify(self.array, index);
+    Heap.maxHeapify(self.array, index, self.array[0]);
     return self;
 };
 
